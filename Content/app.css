@@ -1,13 +1,16 @@
-/* custom css lives here */
-
-body
-{
-    background-color: lightgray;
-}
-
-#canvas
-{
-    margin-left: 10px;
-    background-color: white;
-    border: 1px dotted black;
-}
+ /* 
+ File Name: game.js
+ Author: Devesh Kumar (301117993)
+ Page: index.html 
+ File Description: Custom CSS File 
+ */
+ 
+ body {
+     background-color: lightgray;
+ }
+ 
+ #canvas {
+     margin-left: 10px;
+     background-color: lavender;
+     border: 1px dotted black;
+ }
