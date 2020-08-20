@@ -1,4 +1,7 @@
-(function(){
+
+
+"use strict";
+(function(){    
     // Function scoped Variables
     let stage: createjs.Stage;
     let assets: createjs.LoadQueue;
@@ -17,12 +20,10 @@
     let middleReel: Core.GameObject;
     let rightReel: Core.GameObject;
     let betLine: Core.GameObject;
-    
-
 
     // symbol tallies
     let playerBet = 0;
-    let playerMoney = 1000;
+    let playerMoney;
     let jackpot = 5000;
     let winnings = 0;
     let grapes = 0;
@@ -80,7 +81,7 @@
         Main();
     }
 
-    // called every frame
+    // called every frame or called / 16.667 ms
     function Update():void
     {
         stage.update();
@@ -92,13 +93,13 @@
         {
             return value;
         }
-        else {
+        else 
+        {
             return !value;
         }
     }
 
-    /* When this function is called it determines the betLine results.
-    e.g. Bar - Orange - Banana */
+    /* When this function is called it determines the betLine results.*/
     function Reels():string[] {
         var betLine = [" ", " ", " "];
         var outCome = [0, 0, 0];
@@ -197,7 +198,7 @@
     }
 
     /* This function calculates the player's winnings, if any */
-function determineWinnings() {
+    function determineWinnings() {
     if (blanks === 0) {
         if (grapes === 3) {
             winnings = playerBet * 10;
@@ -233,7 +234,6 @@ function determineWinnings() {
             winnings = playerBet * 1;
         }
        
-
         showWinMessage();
     } else {
         showLossMessage();
@@ -249,14 +249,13 @@ function checkJackPot()
     if (jackPotTry === jackPotWin) {
         alert("You Won the $" + jackpot + " Jackpot!!");
         playerMoney += jackpot;
-        jackpot = 1000;
     }
 }
 
 /* Utility function to show a win message and increase player money */
 function showWinMessage() {
     playerMoney += winnings;
-    winningsLabel.text = String(winnings);
+    winningsLabel.text = "  " + String(winnings);
     resetFruitTally();
     checkJackPot();
 }
@@ -265,13 +264,11 @@ function showWinMessage() {
 /* Utility function to show a loss message and reduce player money */
 function showLossMessage() {
     playerMoney -= playerBet;
-    winningsLabel.text = "0";
+    winningsLabel.text = "  0";
     resetFruitTally();
 }
 
-creditLabel.text = String(playerMoney);
-
-
+creditLabel.text = "  " + String(playerMoney);
 
 /* Utility function to reset all fruit tallies */
 function resetFruitTally() {
@@ -285,7 +282,7 @@ function resetFruitTally() {
     blanks = 0;
 }
 
-}
+    }
 
 
     function interfaceLogic():void
@@ -293,10 +290,10 @@ function resetFruitTally() {
 
         startButton.on("click", ()=>{
 
-            jackPotLabel.text = "5000";
-            creditLabel.text = "1000";
-            betLabel.text = "0";
-            winningsLabel.text = "0";
+            jackPotLabel.text = "  5000";
+            creditLabel.text = "  1000";
+            betLabel.text = " 0";
+            winningsLabel.text = "  0";
             playerMoney = 1000;
             winnings = 0;
 
@@ -305,14 +302,14 @@ function resetFruitTally() {
             bet1Button.on("click", ()=>{
             console.log("bet1Button Button Clicked");
             playerBet = 1;
-            betLabel.text = String(playerBet);
+            betLabel.text = " " + String(playerBet);
 
         });
                 
         bet10Button.on("click", ()=>{
             console.log("bet10Button Button Clicked");
             playerBet = 10;
-            betLabel.text = String(playerBet);
+            betLabel.text = " " + String(playerBet);
 
         });
 
@@ -328,10 +325,7 @@ function resetFruitTally() {
             betLabel.text = String(playerBet);
         });
         
-        // creditLabel.text = String(playerMoney);
-        // winningsLabel.text = String(winnings);
-        // jackPotLabel.text = String(jackpot);
-
+        
         spinButton.on("click", ()=>{
             if (playerMoney === 0)
             {

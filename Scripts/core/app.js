@@ -1,3 +1,4 @@
+"use strict";
 (function () {
     // Function scoped Variables
     let stage;
@@ -19,7 +20,7 @@
     let betLine;
     // symbol tallies
     let playerBet = 0;
-    let playerMoney = 1000;
+    let playerMoney;
     let jackpot = 5000;
     let winnings = 0;
     let grapes = 0;
@@ -67,7 +68,7 @@
         Config.Globals.AssetManifest = assets;
         Main();
     }
-    // called every frame
+    // called every frame or called / 16.667 ms
     function Update() {
         stage.update();
     }
@@ -80,8 +81,7 @@
             return !value;
         }
     }
-    /* When this function is called it determines the betLine results.
-    e.g. Bar - Orange - Banana */
+    /* When this function is called it determines the betLine results.*/
     function Reels() {
         var betLine = [" ", " ", " "];
         var outCome = [0, 0, 0];
@@ -225,23 +225,22 @@
             if (jackPotTry === jackPotWin) {
                 alert("You Won the $" + jackpot + " Jackpot!!");
                 playerMoney += jackpot;
-                jackpot = 1000;
             }
         }
         /* Utility function to show a win message and increase player money */
         function showWinMessage() {
             playerMoney += winnings;
-            winningsLabel.text = String(winnings);
+            winningsLabel.text = "  " + String(winnings);
             resetFruitTally();
             checkJackPot();
         }
         /* Utility function to show a loss message and reduce player money */
         function showLossMessage() {
             playerMoney -= playerBet;
-            winningsLabel.text = "0";
+            winningsLabel.text = "  0";
             resetFruitTally();
         }
-        creditLabel.text = String(playerMoney);
+        creditLabel.text = "  " + String(playerMoney);
         /* Utility function to reset all fruit tallies */
         function resetFruitTally() {
             grapes = 0;
@@ -256,22 +255,22 @@
     }
     function interfaceLogic() {
         startButton.on("click", () => {
-            jackPotLabel.text = "5000";
-            creditLabel.text = "1000";
-            betLabel.text = "0";
-            winningsLabel.text = "0";
+            jackPotLabel.text = "  5000";
+            creditLabel.text = "  1000";
+            betLabel.text = " 0";
+            winningsLabel.text = "  0";
             playerMoney = 1000;
             winnings = 0;
         });
         bet1Button.on("click", () => {
             console.log("bet1Button Button Clicked");
             playerBet = 1;
-            betLabel.text = String(playerBet);
+            betLabel.text = " " + String(playerBet);
         });
         bet10Button.on("click", () => {
             console.log("bet10Button Button Clicked");
             playerBet = 10;
-            betLabel.text = String(playerBet);
+            betLabel.text = " " + String(playerBet);
         });
         bet100Button.on("click", () => {
             console.log("bet100Button Button Clicked");
@@ -283,9 +282,6 @@
             playerBet = 1000;
             betLabel.text = String(playerBet);
         });
-        // creditLabel.text = String(playerMoney);
-        // winningsLabel.text = String(winnings);
-        // jackPotLabel.text = String(jackpot);
         spinButton.on("click", () => {
             if (playerMoney === 0) {
                 alert("You ran out of Money! \nPlease click PLAY button to play again?");
