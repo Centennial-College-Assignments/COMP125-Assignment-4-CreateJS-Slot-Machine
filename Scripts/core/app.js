@@ -1,13 +1,14 @@
-// File Name: game.js
+// File Name: game.ts
 // Author: Devesh Kumar (301117993)
 // Page: index.html 
-// File Description: Custom JavaScript File
+// File Description: Custom TypeScript File
 "use strict";
-(function() {
+(function () {
     // Function scoped Variables
     let stage;
     let assets;
     let slotMachineBackground;
+    let alertLabelBackground;
     let spinButton;
     let bet1Button;
     let bet10Button;
@@ -18,6 +19,7 @@
     let creditLabel;
     let winningsLabel;
     let betLabel;
+    let alertLabel;
     let leftReel;
     let middleReel;
     let rightReel;
@@ -37,6 +39,7 @@
     let blanks = 0;
     let manifest = [
         { id: "background", src: "./Assets/images/background.png" },
+        { id: "alertBackground", src: "./Assets/images/alertLabel.png" },
         { id: "banana", src: "./Assets/images/banana.gif" },
         { id: "bar", src: "./Assets/images/bar.gif" },
         { id: "bell", src: "./Assets/images/bell.gif" },
@@ -80,7 +83,8 @@
     function checkRange(value, lowerBounds, upperBounds) {
         if (value >= lowerBounds && value <= upperBounds) {
             return value;
-        } else {
+        }
+        else {
             return !value;
         }
     }
@@ -132,6 +136,8 @@
         // Slot Machine Background
         slotMachineBackground = new Core.GameObject("background", Config.Screen.CENTER_X, Config.Screen.CENTER_Y, true);
         stage.addChild(slotMachineBackground);
+        alertLabelBackground = new Core.GameObject("alertBackground", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 285, true);
+        stage.addChild(alertLabelBackground);
         // Buttons
         spinButton = new UIObjects.Button("spinButton", Config.Screen.CENTER_X + 135, Config.Screen.CENTER_Y + 176, true);
         stage.addChild(spinButton);
@@ -146,14 +152,16 @@
         startButton = new UIObjects.Button("startButton", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 130, true);
         stage.addChild(startButton);
         // Labels
-        jackPotLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
+        jackPotLabel = new UIObjects.Label("00000000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y - 175, true);
         stage.addChild(jackPotLabel);
-        creditLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
+        creditLabel = new UIObjects.Label("00000000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X - 94, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(creditLabel);
-        winningsLabel = new UIObjects.Label("99999999", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
+        winningsLabel = new UIObjects.Label("00000000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X + 94, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(winningsLabel);
-        betLabel = new UIObjects.Label("9999", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
+        betLabel = new UIObjects.Label("0000", "20px", "Consolas", "#FF0000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 108, true);
         stage.addChild(betLabel);
+        alertLabel = new UIObjects.Label("Welcome! Please click Play on top to begin!", "20px", "Consolas", "#000000", Config.Screen.CENTER_X, Config.Screen.CENTER_Y + 280, true);
+        stage.addChild(alertLabel);
         // Reel GameObjects
         leftReel = new Core.GameObject("bell", Config.Screen.CENTER_X - 79, Config.Screen.CENTER_Y - 12, true);
         stage.addChild(leftReel);
@@ -170,39 +178,55 @@
         if (blanks === 0) {
             if (grapes === 3) {
                 winAmount = playerBet * 10;
-            } else if (bananas === 3) {
+            }
+            else if (bananas === 3) {
                 winAmount = playerBet * 20;
-            } else if (oranges === 3) {
+            }
+            else if (oranges === 3) {
                 winAmount = playerBet * 30;
-            } else if (cherries === 3) {
+            }
+            else if (cherries === 3) {
                 winAmount = playerBet * 40;
-            } else if (bars === 3) {
+            }
+            else if (bars === 3) {
                 winAmount = playerBet * 50;
-            } else if (bells === 3) {
+            }
+            else if (bells === 3) {
                 winAmount = playerBet * 75;
-            } else if (sevens === 3) {
+            }
+            else if (sevens === 3) {
                 winAmount = playerBet * 100;
-            } else if (grapes === 2) {
+            }
+            else if (grapes === 2) {
                 winAmount = playerBet * 2;
-            } else if (bananas === 2) {
+            }
+            else if (bananas === 2) {
                 winAmount = playerBet * 2;
-            } else if (oranges === 2) {
+            }
+            else if (oranges === 2) {
                 winAmount = playerBet * 3;
-            } else if (cherries === 2) {
+            }
+            else if (cherries === 2) {
                 winAmount = playerBet * 4;
-            } else if (bars === 2) {
+            }
+            else if (bars === 2) {
                 winAmount = playerBet * 5;
-            } else if (bells === 2) {
+            }
+            else if (bells === 2) {
                 winAmount = playerBet * 10;
-            } else if (sevens === 2) {
+            }
+            else if (sevens === 2) {
                 winAmount = playerBet * 20;
-            } else if (sevens === 1) {
+            }
+            else if (sevens === 1) {
                 winAmount = playerBet * 5;
-            } else {
+            }
+            else {
                 winAmount = playerBet * 1;
             }
             playerWins();
-        } else {
+        }
+        else {
             playerLoses();
         }
         // Check to see if the player won the jackpot
@@ -211,7 +235,7 @@
             let jackCheck = Math.floor(Math.random() * 51 + 1);
             let jackWin = Math.floor(Math.random() * 51 + 1);
             if (jackCheck === jackWin) {
-                alert("You Won the $" + jackpot + " Jackpot!!");
+                alertLabel.text = ("   Congrats! You also won the $" + jackpot + " Jackpot!!");
                 playerCash += jackpot;
             }
         }
@@ -242,10 +266,18 @@
             blanks = 0;
         }
     }
+    // function to ensure if player has clicked Start button
+    function checkCreditAmount() {
+        if (playerCash === undefined || playerCash === null) {
+            return false;
+        }
+        return true;
+    }
     // This is where main logic is performed
     function interfaceLogic() {
         // Player clicks on Play button to begin the game - this will change Text on slot-machine and give 1000 cash to player
         startButton.on("click", () => {
+            alertLabel.text = "****Hit a BET button to choose a bet!****";
             jackPotLabel.text = "  5000";
             creditLabel.text = "  1000";
             betLabel.text = " 0";
@@ -256,38 +288,74 @@
         // Player clicks on bet1 Button 
         bet1Button.on("click", () => {
             playerBet = 1;
-            betLabel.text = " " + String(playerBet);
+            if (checkCreditAmount()) {
+                betLabel.text = " " + String(playerBet);
+                alertLabel.text = "              Bet Amount = 1 \n\n             Hit Spin to Roll";
+            }
+            else {
+                alertLabel.text = "Please hit the Play Button on top to start!";
+            }
         });
         // Player clicks on bet10 Button 
         bet10Button.on("click", () => {
             playerBet = 10;
-            betLabel.text = " " + String(playerBet);
+            if (checkCreditAmount()) {
+                betLabel.text = " " + String(playerBet);
+                alertLabel.text = "             Bet Amount = 10 \n\n             Hit Spin to Roll";
+            }
+            else {
+                alertLabel.text = "Please hit the Play Button on top to start!";
+            }
         });
         // Player clicks on bet100 Button 
         bet100Button.on("click", () => {
             playerBet = 100;
-            betLabel.text = String(playerBet);
+            if (checkCreditAmount()) {
+                betLabel.text = String(playerBet);
+                alertLabel.text = "             Bet Amount = 100 \n\n             Hit Spin to Roll";
+            }
+            else {
+                alertLabel.text = "Please hit the Play Button on top to start!";
+            }
         });
         // Player clicks on betMax Button, Max bet allowed by casino is $1000
         betMaxButton.on("click", () => {
             playerBet = 1000;
-            betLabel.text = String(playerBet);
+            if (checkCreditAmount()) {
+                betLabel.text = String(playerBet);
+                alertLabel.text = "             Bet Amount = 1000 \n\n             Hit Spin to Roll";
+            }
+            else {
+                alertLabel.text = "Please hit the Play Button on top to start!";
+            }
         });
-        // Spin Button onClick event listener - checks if player has enough cash to place the bet
+        // Player clickes on Spin Button
         spinButton.on("click", () => {
-            if (playerCash === 0) {
-                alert("You ran out of Money! \nPlease click PLAY button to play again?");
-            } else if (playerBet > playerCash) {
-                alert("You don't have enough Money to place that bet. Please try a lower bet");
-            } else {
-                // reel test
-                let reels = Reels();
-                console.log(reels);
-                // Replacing the images in the reels
-                leftReel.image = assets.getResult(reels[0]);
-                middleReel.image = assets.getResult(reels[1]);
-                rightReel.image = assets.getResult(reels[2]);
-                calculateWinnings();
+            if (checkCreditAmount()) {
+                if (playerBet !== undefined) {
+                    if (playerCash === 0) {
+                        alertLabel.text = "            You ran out of Cash! \n\n   Please click PLAY button to play again?";
+                    }
+                    else if (playerBet > playerCash) {
+                        alertLabel.text = "    Not enough Cash to place that bet! \n\n         Please try a lower bet";
+                    }
+                    else {
+                        // reel test
+                        let reels = Reels();
+                        console.log(reels);
+                        // Replacing the images in the reels
+                        leftReel.image = assets.getResult(reels[0]);
+                        middleReel.image = assets.getResult(reels[1]);
+                        rightReel.image = assets.getResult(reels[2]);
+                        calculateWinnings();
+                    }
+                }
+                else {
+                    alertLabel.text = "****Hit a BET button to choose a bet!****";
+                }
+            }
+            else {
+                alertLabel.text = "Please hit the Play Button on top to start!";
             }
         });
     }
