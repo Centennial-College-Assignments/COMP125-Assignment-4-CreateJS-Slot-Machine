@@ -27,7 +27,7 @@
     let betLine: Core.GameObject;
 
     // symbol tallies
-    let playerBet = 0;
+    let playerBet;
     let playerCash;
     let jackpot = 5000;
     let winAmount = 0;
