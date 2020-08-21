@@ -211,7 +211,8 @@
     }
 
     // This function calculates the player's winning amounts, if any
-    function calculateWinnings() {
+    function calculateWinnings():void
+    {
         if (blanks === 0) 
         {
             if (grapes === 3) {
@@ -256,7 +257,7 @@
         }
 
         // Check to see if the player won the jackpot
-        function checkJackPot() 
+        function checkJackPot():void 
         {
             // compare two random values
             let jackCheck = Math.floor(Math.random() * 51 + 1);
@@ -268,7 +269,8 @@
         }
 
         // Utility function to show a win message and increase player money 
-        function playerWins() {
+        function playerWins():void
+        {
         playerCash += winAmount;
         winningsLabel.text = "  " + String(winAmount);
         resetTally();
@@ -276,7 +278,8 @@
         }
 
         // Utility function to show a loss message and reduce player cash
-        function playerLoses() {
+        function playerLoses():void
+        {
             playerCash -= playerBet;
             winningsLabel.text = "  0";
             resetTally();
@@ -286,7 +289,8 @@
         creditLabel.text = "  " + String(playerCash);
 
         // Utility function to reset all fruit tallies
-        function resetTally() {
+        function resetTally():void
+        {
             grapes = 0;
             bananas = 0;
             oranges = 0;
