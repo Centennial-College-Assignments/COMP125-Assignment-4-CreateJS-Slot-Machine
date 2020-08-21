@@ -302,16 +302,7 @@
         }
     }
 
-    // function to ensure if player has clicked Start button
-    function checkCreditAmount():boolean
-    {
-        if (playerCash === undefined || playerCash === null)
-        {
-            return false;
-        }
-        return true;
-    }
-
+    
     // This is where main logic is performed
     function interfaceLogic():void
     {
@@ -330,7 +321,7 @@
         // Player clicks on bet1 Button 
         bet1Button.on("click", ()=>{
             playerBet = 1;
-            if(checkCreditAmount()){
+            if(playerCash !== undefined){
                 betLabel.text = " " + String(playerBet);
                 alertLabel.text = "              Bet Amount = 1 \n\n             Hit Spin to Roll";
             } else 
@@ -342,7 +333,7 @@
         // Player clicks on bet10 Button 
         bet10Button.on("click", ()=>{
             playerBet = 10;
-            if(checkCreditAmount()){
+            if(playerCash !== undefined){
                 betLabel.text = " " + String(playerBet);
                 alertLabel.text = "             Bet Amount = 10 \n\n             Hit Spin to Roll";
             } else 
@@ -354,7 +345,7 @@
         // Player clicks on bet100 Button 
         bet100Button.on("click", ()=>{
             playerBet = 100;
-            if(checkCreditAmount()){
+            if(playerCash !== undefined){
                 betLabel.text = String(playerBet);
                 alertLabel.text = "             Bet Amount = 100 \n\n             Hit Spin to Roll";
             }else 
@@ -366,7 +357,7 @@
         // Player clicks on betMax Button, Max bet allowed by casino is $1000
         betMaxButton.on("click", ()=>{
             playerBet = playerCash;
-            if(checkCreditAmount()){
+            if(playerCash !== undefined){
                 betLabel.text = String(playerBet);
                 alertLabel.text = "             Bet Amount = 1000 \n\n             Hit Spin to Roll";
             }else 
@@ -377,7 +368,7 @@
 
         // Player clickes on Spin Button
         spinButton.on("click", ()=>{
-            if(checkCreditAmount())
+            if(playerCash !== undefined)
             {
                 if (playerBet !== undefined)
                 {
