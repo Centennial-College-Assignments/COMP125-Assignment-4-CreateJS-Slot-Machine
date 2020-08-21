@@ -86,9 +86,9 @@
     }
     // When this function is called it determines the betLine results.
     function Reels() {
-        var betLine = [" ", " ", " "];
-        var outCome = [0, 0, 0];
-        for (var spin = 0; spin < 3; spin++) {
+        let betLine = [" ", " ", " "];
+        let outCome = [0, 0, 0];
+        for (let spin = 0; spin < 3; spin++) {
             outCome[spin] = Math.floor((Math.random() * 65) + 1);
             switch (outCome[spin]) {
                 case checkRange(outCome[spin], 1, 27): // 41.5% probability
