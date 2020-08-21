@@ -361,7 +361,7 @@
 
         // Player clicks on betMax Button, Max bet allowed by casino is $1000
         betMaxButton.on("click", ()=>{
-            playerBet = 1000;
+            playerBet = playerCash;
             if(checkCreditAmount()){
                 betLabel.text = String(playerBet);
                 alertLabel.text = "             Bet Amount = 1000 \n\n             Hit Spin to Roll";
